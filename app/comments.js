@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get("/", auth, async (req, res)=>{
     if(req.query.news_id){
-        Comments.find(req.query.news_id)
+        Comments.find({idNews: req.query.news_id})
             .then(result => res.send(result))
             .catch((e)=>res.send(e).status(500))
     }
@@ -23,7 +23,7 @@ router.get("/", auth, async (req, res)=>{
             .catch((e)=>res.send(e).status(500))
 });
 
-router.post("/", [auth, upload.none(), (req, res) => {
+router.post("/", [auth, upload.none()], (req, res) => {
     const commentsData = req.body;
     const comments = new Comments(commentsData);
     comments.author = req.user._id;

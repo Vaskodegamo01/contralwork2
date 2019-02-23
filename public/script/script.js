@@ -64,20 +64,20 @@ $(()=>{
         $('#log').hide();
     });
 
-    function fotoRendring(){
+    function NewsRendring(){
 
         let application = $("#application");
         application.empty();
         let result_form = $(`<div id="result_form">`);
         let form = $(`<div id="form">`);
-        let form_id = $(`<form method="post" id="ajax_form" action="">`).click((e)=> artistHandler(e));
+        let form_id = $(`<form method="post" id="ajax_form" action="">`).click((e)=> NewsHandler(e));
         let mydiv = $(`<div id="mydiv" class="container">`);
         application.append(result_form,form,form_id,mydiv);
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         if(user !== null) {
             const header = {"Token": user.token};
             $.ajax({
-                url: 'http://localhost:3333/users/foto',
+                url: 'http://localhost:3333/users/news',
                 headers: header,
                 processData: false,
                 contentType: false,
@@ -85,32 +85,32 @@ $(()=>{
                 dataType: 'html'
             }).then(response => {
                 document.getElementById('ajax_form').innerHTML = response;
-                getAllpostsArtists();
+                getAllpostsNews();
             });
         }
     }
-    fotoRendring();
+    NewsRendring();
 
 
 
-    const Artists =(response)=>{
+    const News =(response)=>{
         let div_classCol = $(`<div class="col-md-4">`);
         let  div = $(`<div id=${response._id} class="thumbnail">`);
-        let image = $(`<img  alt="" width="150"/>`).attr('src', `http://localhost:3333/uploads/${response.image}`).click((e)=> PopUpFoto(response.image,e));
-        let name = $(`<p>`).text(`Имя исполнителя: ${response.name}`);
-        let information = $(`<p>`).text(`Информация: ${response.information}`);
+        let image = $(`<img  alt="" width="150"/>`).attr('src', `http://localhost:3333/uploads/${response.image}`);
+        let title = $(`<p>`).text(`Заголовок: ${response.title}`).click((e)=> PopUpFoto(response.image,e));
+        let post = $(`<p>`).text(`читать полностью`);
         if(response.button === "1") {
-            let deleteArtists = $(`<button type="button" class="btn btn-default">Delete by ID</button>`).click((e)=> deleteArtistsById(response._id,e));
-            div.append(image, name, information, deleteArtists);
+            let deleteArtists = $(`<button type="button" class="btn btn-default">Delete by ID</button>`).click((e)=> deleteNewsById(response._id,e));
+            div.append(image, title, deleteArtists);
             div_classCol.append(div);
         }else{
-            div.append(image, name, information);
+            div.append(image, title);
             div_classCol.append(div);
         }
         return div_classCol;
     };
 
-    const deleteArtistsById = (id,e) =>{
+    const deleteNewsById = (id,e) =>{
         e.preventDefault();
         let result_form = $("#result_form");
         let mydiv = $("#mydiv");
@@ -125,18 +125,15 @@ $(()=>{
                 result_form.empty();
                 result_form.text(JSON.stringify(response));
                 mydiv.empty();
-                getAllpostsArtists();
+                getAllpostsNews();
             });
         }
     };
 
-    const getAllpostsArtists = () => {
+    const getAllpostsNews = () => {
         let mydiv = $("#mydiv");
-        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-        if(user !== null) {
-            const header = {"Token": user.token};
-            $.ajax({
-                url: 'http://localhost:3333/fotos',
+         $.ajax({
+                url: 'http://localhost:3333/News',
                 headers: header,
                 processData: false,
                 contentType: false,
@@ -146,10 +143,10 @@ $(()=>{
                 let container = [];
                 let div_classCol = $(`<div class="row">`);
                 let count = response.length;
-                const artists = response.map((artist) => {
+                const news = response.map((news) => {
                     count--;
                     if (i<=2) {
-                        container.push(Artists(artist));
+                        container.push(News(news));
                         i++;
                     }
                     if (i === 2 || count === 0) {
@@ -157,42 +154,12 @@ $(()=>{
                         return div_classCol.append(container);
                     }
                 });
-                mydiv.html(artists);
-            });
-        }
-    };
-
-
-    const getAllpostsArtistsNoUser = () => {
-        let mydiv = $("#mydiv");
-           $.ajax({
-                url: 'http://localhost:3333/fotos/all',
-                processData: false,
-                contentType: false,
-                type: 'GET'
-            }).then((response) => {
-                let i = 0;
-                let container = [];
-                let div_classCol = $(`<div class="row">`);
-                let count = response.length;
-                const artists = response.map((artist) => {
-                    count--;
-                    if (i<=2) {
-                        container.push(Artists(artist));
-                        i++;
-                    }
-                    if (i === 2 || count === 0) {
-                        i=0;
-                        return div_classCol.append(container);
-                    }
-                });
-                mydiv.html(artists);
+                mydiv.html(news);
             });
     };
-    getAllpostsArtistsNoUser();
 
     var imageResized, imageDataUrl;
-    const artistHandler =(e) =>{
+    const NewsHandler =(e) =>{
         if(e.target.id === "image") {
             const dataURLToBlob = function (dataURL) {
                 let raw;

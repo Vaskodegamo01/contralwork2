@@ -5,20 +5,20 @@ const multer = require("multer");
 const auth = require("../middlewares/middleware");
 
 const upload = multer();
-const FotoHTML = `<div class="form-group"><label for="name">Имя исполнителя</label><input type="text" class="form-control" id="name" name="name" required=""></div><div class="form-group"><label for="image">Фото</label><input type="file" class="form-control" name="image" id="image" required=""></div><div class="form-group"><label for="information">Информация</label><input type="text" class="form-control" id="information" name="information" required=""></div><div style="overflow: hidden; padding-right: .5em;"><input type="submit" id="btn_artist" class="btn btn-primary" value="Отправить" ></div>`;
+const NewsHTML = `<div class="form-group"><label for="title">Заголовок новости</label><input type="text" class="form-control" id="title" name="title" required=""></div><div class="form-group"><label for="image">Фото</label><input type="file" class="form-control" name="image" id="image" required=""></div><div class="form-group"><label for="data">Содержимое новости</label><input type="text" class="form-control" id="data" name="data" required=""></div><div style="overflow: hidden; padding-right: .5em;"><input type="submit" id="btn_artist" class="btn btn-primary" value="Отправить" ></div>`;
 
-const fotoList = `<p2><b>Список Исполнителей</b></p2>`;
+const NewsList = `<p2><b>Новости</b></p2>`;
 
 
 const createRouter = () => {
     const router = express.Router();
 
-    router.get("/foto", auth, (req,res)=>{
+    router.get("/news", auth, (req,res)=>{
         if(req.user.role === 'admin' || req.user.role === 'user'){
-            res.send(FotoHTML);
+            res.send(NewsHTML);
         }else
         {
-            res.send(fotoList);
+            res.send(NewsList);
         }
     });
 
