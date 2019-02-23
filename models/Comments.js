@@ -9,10 +9,9 @@ const CommentsSchema = new Schema({
         ref: 'News',
         required: true
     },
-    Author: {
+    author: {
         type: String,
-        default: 'Anonymous',
-        enum: ['user', 'admin', 'Anonymous']
+        default: 'Anonymous'
     },
     comments: {
         type: String,
