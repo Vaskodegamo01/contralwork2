@@ -26,7 +26,6 @@ const createRouter = () => {
         const user = new User({
             username: req.body.username,
             password: req.body.password
-
         });
         user.generateToken();
         user.save()
