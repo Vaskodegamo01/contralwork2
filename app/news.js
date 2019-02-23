@@ -56,7 +56,7 @@ router.post("/", [auth, upload.single("image")], (req, res) => {
     const newsData = req.body;
     if (req.file) newsData.image = req.file.filename;
     const news = new News(newsData);
-    news.time = new Data();
+    news.time = new Date();
     news.save()
         .then( () => res.send(newsData))
         .catch(e => res.send(e).status(500))
