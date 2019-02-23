@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="script/script.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Лабораторная работа</title>
+</head>
+<body>
+<div>
+    <div id="log">
+    <form class="form-horizontal" id="formLogin">
+            <div>
+                <p>
+                    <b>Пожалуйста авторизуйтесь</b>
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="inputLogin" class="control-label col-xs-2">Login</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" name="username" id="inputLogin" placeholder="Login">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="control-label col-xs-2">Пароль</label>
+                <div class="col-xs-10">
+                    <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Пароль">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-10">
+                    <button type="submit" class="btn btn-primary" id="login">Войти</button>
+                    <button type="submit" class="btn btn-primary" id="bregister">зарегистрироваться</button>
+                </div>
+            </div>
+    </form>
+    </div>
+
+    <div id="reg">
+        <form class="form-horizontal" id="formRegister">
+                <div>
+                    <p>
+                        <b>Пожалуйста зарегистрируйтесь</b>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="LoginRegister" class="control-label col-xs-2">Login</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" name="username" id="LoginRegister" placeholder="Login">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="PasswordRegister" class="control-label col-xs-2">Пароль</label>
+                    <div class="col-xs-10">
+                        <input type="password" class="form-control" name="password" id="PasswordRegister" placeholder="Пароль">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <button type="submit" class="btn btn-primary" id="register">зарегистрироваться</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <button type="submit" class="btn btn-primary" id="logout">Выйти</button>
+        </div>
+    </div>
+</div>
+<div id="application">
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Foto</h4>
+            </div>
+            <div class="modal-body">
+                <img id="fotoId" width="600"  alt="" src="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
