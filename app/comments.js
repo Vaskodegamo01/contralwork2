@@ -12,15 +12,16 @@ const upload = multer();
 
 const router = express.Router();
 
-router.get("/", auth, async (req, res)=>{
+router.get("/", async (req, res)=>{
     if(req.query.news_id){
         Comments.find({idNews: req.query.news_id})
             .then(result => res.send(result))
             .catch((e)=>res.send(e).status(500))
-    }
-    Comments.find()
+    }else{
+        Comments.find()
             .then(result => res.send(result))
             .catch((e)=>res.send(e).status(500))
+    }
 });
 
 router.post("/", [auth, upload.none()], (req, res) => {

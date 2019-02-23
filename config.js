@@ -7,6 +7,6 @@ module.exports = {
     uploadPath: path.join(rootPath, "public/uploads"),
     db: {
         url: "mongodb://localhost:27017",
-        name: "News"
+        name: "news"
     }
 };
