@@ -119,7 +119,7 @@ $(()=>{
         let title = $(`<p>`).text(`Заголовок: ${response.title}`);
         let post = $(`<button type="button" class="btn btn-default">Читать полностью</button>`).click((e) => PopUpNews(e,response._id));
         if(response.button === "1") {
-            let deleteComments = $(`<button type="button" class="btn btn-default">Delete by ID</button>`).click((e)=> deleteNewsById(e,response._id));
+            let deleteComments = $(`<button type="button" id="b${response._id}" class="btn btn-default">Delete by ID</button>`).click((e)=> deleteNewsById(e,response._id));
             div.append(image, title, post, deleteComments);
             div_classCol.append(div);
         }else{
@@ -355,17 +355,40 @@ $(()=>{
                 type: 'GET',
                 dataType: 'html'
             }).then((response) => {
+                let check = document.getElementById(`b${id}`);
                 let div_c = $("#div_comments");
                 response = JSON.parse(response);
                 let divRow = $(`<div class="row">`);
                 const comments = response.map((comments) => {
                     let comment = $(`<p>`).text(`коментарий: ${comments.comments}`);
+                    if(check){
+                        let deleteComments = $(`<button type="button"  class="btn btn-default">Delete by ID</button>`).click((e)=> deleteCommentById(e,comments._id,comments.idNews));
+                        return divRow.append(comment, deleteComments);
+                    }
                     return divRow.append(comment);
                 });
                 div_c.html(comments[0]);
             })
         )
     }
+
+    const deleteCommentById = (e,id,idNews) =>{
+        let modalmydiv = $("#modalmydiv");
+        e.preventDefault();
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        if(user !== null) {
+            const header = {"Token": user.token};
+            $.ajax({
+                url: `http://localhost:3333/comments/${id}`,
+                headers: header,
+                type: 'DELETE'
+            }).then((response) => {
+                modalmydiv.empty();
+                getNewsById(idNews);
+            });
+        }
+    };
+
 
     const PopUpNews =async  (e,id) =>{
         let modal = $("#modal");
